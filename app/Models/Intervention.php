@@ -9,9 +9,18 @@ class Intervention extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['truck_id', 'date', 'technician', 'price', 'duration', 'description', 'photos'];
+    protected $fillable = [
+    'truck_id',
+    'date',
+    'technician',
+    'price',
+    'mileage',
+    'duration',
+    'description',
+    'photos',
+];
 
-    protected $casts = ['photos' => 'array']; // Important pour les images
+    protected $casts = ['photos' => 'array'];
 
     public function truck()
     {

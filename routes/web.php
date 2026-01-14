@@ -2,8 +2,10 @@
 
 use App\Livewire\VehicleList;
 use App\Livewire\VehicleShow;
-use App\Models\Truck; // Ton tableau de bord
+use App\Models\Truck;
 use Illuminate\Support\Facades\Route;
+use App\Models\MaintenancePlan;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,6 @@ Route::view('notes', 'notes')
     ->name('notes');
 
 Route::get('/client/{client}', function (App\Models\Client $client) {
-    // Vérification de sécurité : le client doit t'appartenir
     if ($client->user_id !== auth()->id()) {
         abort(403);
     }
@@ -36,7 +37,6 @@ Route::get('/client/{client}', function (App\Models\Client $client) {
 })->name('client.show')->middleware(['auth']);
 
 Route::get('/truck/{truck}', function (Truck $truck) {
-    // Optionnel : vérifier que le camion appartient bien à un client de l'utilisateur connecté
     if ($truck->client->user_id !== auth()->id()) {
         abort(403);
     }
@@ -44,11 +44,18 @@ Route::get('/truck/{truck}', function (Truck $truck) {
     return view('truck-detail', ['truck' => $truck]);
 })->name('truck.show')->middleware(['auth']);
 
+Route::get('/maintenance-plan/{plan}/pdf', function (MaintenancePlan $plan) {
+    $pdf = Pdf::loadView('pdf.maintenance-report', compact('plan'));
+    
+    $filename = 'rapport_' . $plan->truck->plate_number . '_' . $plan->check_date->format('d-m-Y') . '.pdf';
+    
+    return $pdf->download($filename);
+})->name('maintenance.pdf');
+
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
 Route::get('/dashboard', VehicleList::class)->name('dashboard');
-// {vehicle} permet à Laravel de comprendre qu'il doit chercher un modèle Vehicle
 Route::get('/vehicles/{vehicle}', VehicleShow::class)->name('vehicles.show');
 require __DIR__.'/auth.php';

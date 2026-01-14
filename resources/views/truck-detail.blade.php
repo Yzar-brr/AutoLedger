@@ -2,7 +2,7 @@ l<x-app-layout>
     <x-slot name="header">
     <div class="flex justify-between items-center">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Interventions : {{ $truck->plate_number }}
+            Détails : {{ $truck->plate_number }}
         </h2>
         {{-- Retour vers le détail du client parent --}}
         <a href="{{ route('client.show', $truck->client_id) }}" class="inline-flex items-center px-4 py-2 bg-white border border-indigo-200 rounded-xl font-bold text-[10px] text-indigo-600 uppercase tracking-widest shadow-sm hover:bg-indigo-50 transition">

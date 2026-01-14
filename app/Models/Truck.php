@@ -21,4 +21,9 @@ class Truck extends Model
     {
         return $this->hasMany(Intervention::class);
     }
+
+    public function maintenancePlans()
+    {
+        return $this->hasMany(MaintenancePlan::class)->latest();
+    }
 }
