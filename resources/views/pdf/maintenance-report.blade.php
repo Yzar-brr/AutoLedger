@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    test
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body { font-family: 'Helvetica', 'Arial', sans-serif; color: #1a202c; line-height: 1.5; font-size: 13px; }
