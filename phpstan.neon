@@ -1,0 +1,12 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app/
+    
+    # Niveau 5 est un excellent compromis entre rigueur et rapidité
+    level: 5
+
+    ignoreErrors:
+        # Tu peux ajouter ici des erreurs spécifiques à ignorer plus tard
