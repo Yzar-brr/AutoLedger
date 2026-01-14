@@ -77,6 +77,7 @@ new class extends Component
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
+                
             </div>
         </div>
     </div>
@@ -85,7 +86,11 @@ new class extends Component
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                {{ __('Dashboard') }}
+                {{ __('Parc Automobiles') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('notes')" :active="request()->routeIs('notes')" wire:navigate>
+                {{ __('Notes') }}
             </x-responsive-nav-link>
         </div>
 

@@ -30,6 +30,19 @@ class ClientManager extends Component
         session()->flash('message', 'Client ajouté !');
     }
 
+    public function deleteClient($id)
+{
+    $client = \App\Models\Client::findOrFail($id);
+    
+    // Si tu as des photos liées aux interventions des camions de ce client, 
+    // il faudrait idéalement les supprimer du stockage ici.
+    
+    $client->delete();
+
+    // Notification ou message flash (optionnel)
+    session()->flash('message', 'Client supprimé avec succès.');
+}
+
     public function render()
     {
         return view('livewire.client-manager', [
