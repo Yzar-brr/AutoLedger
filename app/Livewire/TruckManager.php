@@ -2,15 +2,18 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Client;
 use App\Models\Truck;
+use Livewire\Component;
 
 class TruckManager extends Component
 {
     public Client $client;
+
     public $brand;
+
     public $plate_number;
+
     public $showForm = false;
 
     public function addTruck()
@@ -29,20 +32,19 @@ class TruckManager extends Component
     }
 
     public function deleteTruck($id)
-{
-    $truck = Truck::where('id', $id)->first();
-    
-    // Sécurité : on vérifie que le camion appartient bien à un client de l'utilisateur
-    if ($truck && $truck->client->user_id === auth()->id()) {
-        $truck->delete();
-    }
-}
+    {
+        $truck = Truck::where('id', $id)->first();
 
+        // Sécurité : on vérifie que le camion appartient bien à un client de l'utilisateur
+        if ($truck && $truck->client->user_id === auth()->id()) {
+            $truck->delete();
+        }
+    }
 
     public function render()
     {
         return view('livewire.truck-manager', [
-            'trucks' => $this->client->trucks()->withCount('interventions')->latest()->get()
+            'trucks' => $this->client->trucks()->withCount('interventions')->latest()->get(),
         ]);
     }
 }

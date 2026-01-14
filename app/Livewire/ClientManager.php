@@ -2,14 +2,17 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Client;
+use Livewire\Component;
 
 class ClientManager extends Component
 {
     public $name;
+
     public $phone;
+
     public $contact_person;
+
     public $showForm = false; // Pour déplier le formulaire
 
     public function addClient()
@@ -31,23 +34,23 @@ class ClientManager extends Component
     }
 
     public function deleteClient($id)
-{
-    $client = \App\Models\Client::findOrFail($id);
-    
-    // Si tu as des photos liées aux interventions des camions de ce client, 
-    // il faudrait idéalement les supprimer du stockage ici.
-    
-    $client->delete();
+    {
+        $client = \App\Models\Client::findOrFail($id);
 
-    // Notification ou message flash (optionnel)
-    session()->flash('message', 'Client supprimé avec succès.');
-}
+        // Si tu as des photos liées aux interventions des camions de ce client,
+        // il faudrait idéalement les supprimer du stockage ici.
+
+        $client->delete();
+
+        // Notification ou message flash (optionnel)
+        session()->flash('message', 'Client supprimé avec succès.');
+    }
 
     public function render()
     {
         return view('livewire.client-manager', [
             // On récupère tes clients avec leurs camions pour afficher le compteur
-            'clients' => Client::where('user_id', auth()->id())->withCount('trucks')->latest()->get()
+            'clients' => Client::where('user_id', auth()->id())->withCount('trucks')->latest()->get(),
         ]);
     }
 }

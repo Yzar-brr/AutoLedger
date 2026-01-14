@@ -42,7 +42,7 @@ class LoginForm extends Form
         // --- VÉRIFICATION DU COMPTE APPROUVÉ ---
         // Une fois connecté, on vérifie si la colonne is_approved est à true
         if (! Auth::user()->is_approved) {
-            
+
             // On déconnecte l'utilisateur tout de suite
             Auth::logout();
 

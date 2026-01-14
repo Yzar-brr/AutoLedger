@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('interventions', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('truck_id')->constrained()->onDelete('cascade');
-    $table->date('date');
-    $table->string('technician'); // Nom du technicien
-    $table->decimal('price', 10, 2); // Prix
-    $table->string('duration'); // Temps passé (ex: "2h30")
-    $table->text('description'); // Le contenu de la note
-    $table->json('photos')->nullable(); // Pour stocker les chemins des images
-    $table->timestamps();
-});
+            $table->id();
+            $table->foreignId('truck_id')->constrained()->onDelete('cascade');
+            $table->date('date');
+            $table->string('technician'); // Nom du technicien
+            $table->decimal('price', 10, 2); // Prix
+            $table->string('duration'); // Temps passé (ex: "2h30")
+            $table->text('description'); // Le contenu de la note
+            $table->json('photos')->nullable(); // Pour stocker les chemins des images
+            $table->timestamps();
+        });
     }
 
     /**

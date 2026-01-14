@@ -2,23 +2,28 @@
 
 namespace App\Livewire;
 
+use App\Models\Intervention;
+use App\Models\Truck;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use App\Models\Truck;
-use App\Models\Intervention;
 
 class TruckInterventions extends Component
 {
     use WithFileUploads;
 
     public Truck $truck; // On reçoit le camion actuel
-    
+
     // Champs du formulaire
     public $date;
+
     public $technician;
+
     public $price;
+
     public $duration;
+
     public $description;
+
     public $newPhotos = []; // Pour l'upload
 
     public function mount(Truck $truck)
@@ -41,7 +46,7 @@ class TruckInterventions extends Component
         // Gestion des images
         $photoPaths = [];
         foreach ($this->newPhotos as $photo) {
-            $photoPaths[] = $photo->store('interventions/' . $this->truck->id, 'public');
+            $photoPaths[] = $photo->store('interventions/'.$this->truck->id, 'public');
         }
 
         $this->truck->interventions()->create([
@@ -65,7 +70,7 @@ class TruckInterventions extends Component
     public function render()
     {
         return view('livewire.truck-interventions', [
-            'interventions' => $this->truck->interventions()->latest()->get()
+            'interventions' => $this->truck->interventions()->latest()->get(),
         ]);
     }
 }

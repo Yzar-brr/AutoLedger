@@ -10,16 +10,16 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('notes', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->string('title');
-        $table->text('content');
-        $table->string('color')->default('bg-white'); // Pour personnaliser tes notes
-        $table->timestamps();
-    });
-}
+    {
+        Schema::create('notes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->text('content');
+            $table->string('color')->default('bg-white'); // Pour personnaliser tes notes
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-    // Par défaut 0 = en attente de validation
-    $table->boolean('is_approved')->default(false); 
-    });
+            // Par défaut 0 = en attente de validation
+            $table->boolean('is_approved')->default(false);
+        });
     }
 
-    
     /**
      * Reverse the migrations.
      */

@@ -14,8 +14,8 @@ class VehiclePhoto extends Model
     protected $table = 'vehicle_photos';
 
     protected $fillable = [
-        'vehicle_id', 
-        'path'
+        'vehicle_id',
+        'path',
     ];
 
     /**

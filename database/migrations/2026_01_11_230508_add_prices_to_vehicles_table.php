@@ -9,19 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up(): void
-{
-    Schema::table('vehicles', function (Blueprint $table) {
-        // decimal(10,2) permet de stocker jusqu'à 99 999 999.99 €
-        $table->decimal('purchase_price', 10, 2)->nullable()->after('registration');
-        $table->decimal('selling_price', 10, 2)->nullable()->after('purchase_price');
-    });
-}
+    public function up(): void
+    {
+        Schema::table('vehicles', function (Blueprint $table) {
+            // decimal(10,2) permet de stocker jusqu'à 99 999 999.99 €
+            $table->decimal('purchase_price', 10, 2)->nullable()->after('registration');
+            $table->decimal('selling_price', 10, 2)->nullable()->after('purchase_price');
+        });
+    }
 
-public function down(): void
-{
-    Schema::table('vehicles', function (Blueprint $table) {
-        $table->dropColumn(['purchase_price', 'selling_price']);
-    });
-}
+    public function down(): void
+    {
+        Schema::table('vehicles', function (Blueprint $table) {
+            $table->dropColumn(['purchase_price', 'selling_price']);
+        });
+    }
 };

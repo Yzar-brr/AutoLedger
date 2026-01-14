@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Livewire\VehicleList;
 use App\Livewire\VehicleShow;
-use App\Livewire\VehicleList; // Ton tableau de bord
-use App\Models\Truck;
+use App\Models\Truck; // Ton tableau de bord
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +26,12 @@ Route::view('notes', 'notes')
     ->middleware(['auth', 'verified'])
     ->name('notes');
 
-    Route::get('/client/{client}', function (App\Models\Client $client) {
+Route::get('/client/{client}', function (App\Models\Client $client) {
     // Vérification de sécurité : le client doit t'appartenir
-    if($client->user_id !== auth()->id()) abort(403);
-    
+    if ($client->user_id !== auth()->id()) {
+        abort(403);
+    }
+
     return view('client-detail', ['client' => $client]);
 })->name('client.show')->middleware(['auth']);
 
@@ -38,15 +40,13 @@ Route::get('/truck/{truck}', function (Truck $truck) {
     if ($truck->client->user_id !== auth()->id()) {
         abort(403);
     }
-    
+
     return view('truck-detail', ['truck' => $truck]);
 })->name('truck.show')->middleware(['auth']);
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
-
 
 Route::get('/dashboard', VehicleList::class)->name('dashboard');
 // {vehicle} permet à Laravel de comprendre qu'il doit chercher un modèle Vehicle

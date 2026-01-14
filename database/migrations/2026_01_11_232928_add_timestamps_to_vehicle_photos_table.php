@@ -10,11 +10,11 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up()
-{
-    Schema::table('vehicle_photos', function (Blueprint $table) {
-        $table->timestamps(); // Ceci ajoute created_at et updated_at
-    });
-}
+    {
+        Schema::table('vehicle_photos', function (Blueprint $table) {
+            $table->timestamps(); // Ceci ajoute created_at et updated_at
+        });
+    }
 
     /**
      * Reverse the migrations.

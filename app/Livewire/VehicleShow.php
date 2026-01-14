@@ -2,19 +2,24 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
-use Livewire\WithFileUploads;
 use App\Models\Vehicle;
-use App\Models\Expense;
 use App\Models\VehiclePhoto;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class VehicleShow extends Component
 {
     use WithFileUploads;
 
     public Vehicle $vehicle;
-    public $label, $amount, $notes;
+
+    public $label;
+
+    public $amount;
+
+    public $notes;
+
     public $newPhotos = []; // Utilisé pour l'upload multiple
 
     public function mount(Vehicle $vehicle)
@@ -34,20 +39,20 @@ class VehicleShow extends Component
 
         foreach ($this->newPhotos as $photo) {
             // STOCKAGE : On range dans le dossier spécifique de l'utilisateur
-            $path = $photo->store('vehicles/' . auth()->id(), 'public');
+            $path = $photo->store('vehicles/'.auth()->id(), 'public');
 
             // INSERTION : On crée l'entrée en base de données
             $this->vehicle->photos()->create([
-                'path' => $path
+                'path' => $path,
             ]);
         }
 
         // Nettoyage de la propriété temporaire
         $this->newPhotos = [];
-        
+
         // Rafraîchir le modèle pour afficher les nouvelles photos
         $this->vehicle->refresh();
-        
+
         session()->flash('message', 'Photos ajoutées avec succès.');
     }
 

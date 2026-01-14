@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Note;
+use Livewire\Component;
 
 class NoteManager extends Component
 {
     public $title;
+
     public $content;
 
     protected $rules = [
@@ -36,7 +37,7 @@ class NoteManager extends Component
     public function render()
     {
         return view('livewire.note-manager', [
-            'notes' => auth()->user()->notes()->latest()->get()
+            'notes' => auth()->user()->notes()->latest()->get(),
         ]);
     }
 }

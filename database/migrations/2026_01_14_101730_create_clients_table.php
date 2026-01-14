@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-    $table->id();
-    $table->foreignId('user_id')->constrained(); // Le client t'appartient
-    $table->string('name'); // Nom de l'entreprise ou du client
-    $table->string('contact_person')->nullable();
-    $table->string('phone')->nullable();
-    $table->timestamps();
+            $table->id();
+            $table->foreignId('user_id')->constrained(); // Le client t'appartient
+            $table->string('name'); // Nom de l'entreprise ou du client
+            $table->string('contact_person')->nullable();
+            $table->string('phone')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -14,13 +14,13 @@ class Vehicle extends Model
 
     // Autorise le remplissage de tous les champs nécessaires
     protected $fillable = [
-        'user_id', 
-        'model', 
-        'registration', 
-        'status', 
-        'purchase_price', 
-        'selling_price', 
-        'image_path'
+        'user_id',
+        'model',
+        'registration',
+        'status',
+        'purchase_price',
+        'selling_price',
+        'image_path',
     ];
 
     /**
