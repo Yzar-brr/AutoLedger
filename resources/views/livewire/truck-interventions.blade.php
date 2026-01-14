@@ -1,7 +1,7 @@
 <div x-data="{ showForm: false, showImage: null }">
 
     {{-- En-tête + Bouton Déplier --}}
-    <div class="mb-6 flex justify-between items-center">
+    <div class="mb-6 flex justify-between items-center m-4">
         <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest">Carnet d'entretien : {{ $truck->plate_number }}</h3>
         <button @click="showForm = !showForm"
             class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-xl text-[10px] uppercase tracking-widest shadow-lg transition-all flex items-center">
