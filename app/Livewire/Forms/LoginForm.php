@@ -30,6 +30,7 @@ class LoginForm extends Form
     {
         $this->ensureIsNotRateLimited();
 
+        // Tentative de connexion standard
         if (! Auth::attempt($this->only(['email', 'password']), $this->remember)) {
             RateLimiter::hit($this->throttleKey());
 
@@ -37,6 +38,20 @@ class LoginForm extends Form
                 'form.email' => trans('auth.failed'),
             ]);
         }
+
+        // --- VÉRIFICATION DU COMPTE APPROUVÉ ---
+        // Une fois connecté, on vérifie si la colonne is_approved est à true
+        if (! Auth::user()->is_approved) {
+            
+            // On déconnecte l'utilisateur tout de suite
+            Auth::logout();
+
+            // On renvoie une erreur spécifique
+            throw ValidationException::withMessages([
+                'form.email' => 'Votre compte est en attente de validation par un administrateur.',
+            ]);
+        }
+        // ----------------------------------------
 
         RateLimiter::clear($this->throttleKey());
     }

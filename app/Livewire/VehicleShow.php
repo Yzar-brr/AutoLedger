@@ -15,12 +15,40 @@ class VehicleShow extends Component
 
     public Vehicle $vehicle;
     public $label, $amount, $notes;
-    public $newPhotos = [];
+    public $newPhotos = []; // Utilisé pour l'upload multiple
 
     public function mount(Vehicle $vehicle)
     {
-        // On charge les relations pour éviter les erreurs
+        // On charge les relations pour éviter les erreurs de "undefined relationship"
         $this->vehicle = $vehicle->load(['expenses', 'photos']);
+    }
+
+    /**
+     * Hook automatique : s'exécute dès que des photos sont sélectionnées
+     */
+    public function updatedNewPhotos()
+    {
+        $this->validate([
+            'newPhotos.*' => 'image|max:3072', // 3Mo max
+        ]);
+
+        foreach ($this->newPhotos as $photo) {
+            // STOCKAGE : On range dans le dossier spécifique de l'utilisateur
+            $path = $photo->store('vehicles/' . auth()->id(), 'public');
+
+            // INSERTION : On crée l'entrée en base de données
+            $this->vehicle->photos()->create([
+                'path' => $path
+            ]);
+        }
+
+        // Nettoyage de la propriété temporaire
+        $this->newPhotos = [];
+        
+        // Rafraîchir le modèle pour afficher les nouvelles photos
+        $this->vehicle->refresh();
+        
+        session()->flash('message', 'Photos ajoutées avec succès.');
     }
 
     public function addExpense()
@@ -40,30 +68,25 @@ class VehicleShow extends Component
         $this->vehicle->refresh();
     }
 
-    public function uploadPhotos()
-    {
-        $this->validate(['newPhotos.*' => 'image|max:3072']);
-
-        foreach ($this->newPhotos as $photo) {
-            $path = $photo->store('vehicles/gallery', 'public');
-            $this->vehicle->photos()->create(['path' => $path]);
-        }
-
-        $this->newPhotos = [];
-        $this->vehicle->refresh();
-    }
-
     public function deletePhoto($photoId)
     {
+        // On récupère la photo
         $photo = VehiclePhoto::findOrFail($photoId);
-        Storage::disk('public')->delete($photo->path);
+
+        // Suppression physique du fichier sur le disque
+        if (Storage::disk('public')->exists($photo->path)) {
+            Storage::disk('public')->delete($photo->path);
+        }
+
+        // Suppression de la ligne en base de données
         $photo->delete();
+
+        // Rafraîchir l'affichage
         $this->vehicle->refresh();
     }
 
     public function render()
     {
-        // On force le layout standard pour garder les bords gris
         return view('livewire.vehicle-show')->layout('layouts.app');
     }
 }

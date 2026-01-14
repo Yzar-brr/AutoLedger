@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Livewire\VehicleShow;
 use App\Livewire\VehicleList; // Ton tableau de bord
+use App\Models\Truck;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,26 @@ Route::view('/', 'welcome');
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::view('notes', 'notes')
+    ->middleware(['auth', 'verified'])
+    ->name('notes');
+
+    Route::get('/client/{client}', function (App\Models\Client $client) {
+    // Vérification de sécurité : le client doit t'appartenir
+    if($client->user_id !== auth()->id()) abort(403);
+    
+    return view('client-detail', ['client' => $client]);
+})->name('client.show')->middleware(['auth']);
+
+Route::get('/truck/{truck}', function (Truck $truck) {
+    // Optionnel : vérifier que le camion appartient bien à un client de l'utilisateur connecté
+    if ($truck->client->user_id !== auth()->id()) {
+        abort(403);
+    }
+    
+    return view('truck-detail', ['truck' => $truck]);
+})->name('truck.show')->middleware(['auth']);
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
